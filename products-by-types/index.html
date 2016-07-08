@@ -7,41 +7,19 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 <body>
-<div id="products"></div>
+<div id="sale"></div>
+<div id="promo"></div>
+<div id="recommended"></div>
 <script type="text/template" id="items">
     <div class="container">
-        <div class="row" id="sale">
-            <h2><%=title[0]%></h2>
-            <% _.each(sale, function(item) { %>
+        <div class="row" id="">
+            <h2><%=title%></h2>
+            <% _.each(products, function(item) { %>
                 <div class="col-md-4">
                     <img src="media/products/<%=item.pic%>" alt="">
                     <p class="name"><%=item.name%></p>
                     <p>Цена: <%=item.price%>P</p>
                 </div>
-            <% }); %>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row" id="promo">
-            <h2><%=title[1]%></h2>
-            <% _.each(promo, function(item) { %>
-            <div class="col-md-4">
-                <img src="media/products/<%=item.pic%>" alt="">
-                <p class="name"><%=item.name%></p>
-                <p>Цена: <%=item.price%>P</p>
-            </div>
-            <% }); %>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row" id="recommended">
-            <h2><%=title[2]%></h2>
-            <% _.each(recommended, function(item) { %>
-            <div class="col-md-4">
-                <img src="media/products/<%=item.pic%>" alt="">
-                <p class="name"><%=item.name%></p>
-                <p>Цена: <%=item.price%>P</p>
-            </div>
             <% }); %>
         </div>
     </div>
