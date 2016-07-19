@@ -15,18 +15,18 @@ const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 const gulpif = require('gulp-if');
 
-gulp.task('styles', function(){
+gulp.task('styles', () => {
     gulp.src('src/less/*.less')
-        .pipe(less())
-        .pipe(concat('css/all.css'))
-        .pipe(gulpif(isProd, sourcemaps.init()))
-        .pipe(gulpif(isProd, minifyCss()))
-        .pipe(gulpif(isProd, autoprefixer()))
-        .pipe(gulpif(isProd,sourcemaps.write()))
-        .pipe(gulp.dest('dist'))
+    .pipe(less())
+    .pipe(concat('css/all.css'))
+    .pipe(gulpif(isProd, sourcemaps.init()))
+    .pipe(gulpif(isProd, minifyCss()))
+    .pipe(gulpif(isProd, autoprefixer()))
+    .pipe(gulpif(isProd,sourcemaps.write()))
+    .pipe(gulp.dest('dist'))
 });
 
-gulp.task('autoprefixer', function () {
+gulp.task('autoprefixer', () => {
     return gulp.src('dist/all.css')
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
@@ -35,7 +35,7 @@ gulp.task('autoprefixer', function () {
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task('scripts', function() {
+gulp.task('scripts', () => {
     return gulp.src('src/js/*.js')
         .pipe(concat('js/all.js'))
         .pipe(gulpif(isProd, sourcemaps.init()))
@@ -45,17 +45,17 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task('html', function(){
+gulp.task('html', () => {
     return gulp.src('src/*.html')
         .pipe(gulp.dest('dist'))
 });
 
-gulp.task('img', function(){
+gulp.task('img', () => {
     return gulp.src('src/img/**')
         .pipe(gulp.dest('dist/img'))
 });
 
-gulp.task('browserSync', function() {
+gulp.task('browserSync', () => {
     browserSync({
         server: {
             baseDir: 'dist'
@@ -69,7 +69,7 @@ gulp.src('src/img/*')
     .pipe(gulp.dest('dist/img'))
 );
 
-gulp.task('eslint', function() {
+gulp.task('eslint', () => {
     return gulp.src(['**/*.js', '**/*.less', '!node_modules/**'])
         .pipe(gulpif(isProd, eslint()))
 });
