@@ -1,0 +1,272 @@
+@import "mixin";
+
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+//header
+.top {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: @bgTop;
+	color: @text;
+	&__text {
+		margin: 0 auto;
+		padding: 8px 0;
+		vertical-align: middle;
+		text-transform: uppercase;
+	}
+	&__text-link {
+		color: @text;
+		text-decoration: underline;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+.header {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	color: @text;
+}
+.logo {
+	width: 300px;
+	height: 67px;
+	margin: 20px 0;
+	background: url(../img/svg/logo.svg) no-repeat;
+	background-size: 300px 67px;
+}
+.icon-menu {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  .fa {
+    font-size: 35px;
+  }
+}
+.link-help,
+.link-account {
+  width: 35%;
+  color: @linkHeader;
+}
+.link-help {
+
+	&__list {
+		display: inline;
+	}
+	&__list-item {
+		display: inline-block;
+        padding: 0 10px;
+        border-right: 1px solid @border;
+        &:last-child {
+            border: 0;
+        }
+	}
+}
+.link-account {
+	&__list {
+		display: inline;
+	}
+	&__list-item {
+		display: inline-block;
+		text-transform: uppercase;
+        padding: 0 10px;
+        border-right: 1px solid @border;
+        &:last-child {
+          border: 0;
+        }
+	}
+}
+.nav {
+    display: flex;
+	background: @bgNav;
+	color: @linkNav;
+	margin: 0 auto;
+	&__list {
+		margin: auto;
+		display: inline;
+	}
+	&__list-item {
+		display: inline-block;
+		text-transform: uppercase;
+		padding: 15px;
+	}
+}
+.banner-top {
+	&__img {
+		width: 100%;
+		display: block;
+	}
+}
+.banner-center {
+	display: flex;
+	align-content: stretch;
+	overflow: hidden;
+	img {
+		width: 100%;
+		display: block;
+	}
+	&__left-top,
+	&__left-bottom {
+		overflow: hidden;
+		height: 350px;
+	}
+	&__left-top img {
+		margin-top: -50%;
+	}
+	&__left-bottom {
+		height: 50%;
+		background: #88b5ba;
+	}
+	&__left {
+		width: 50%;
+	}
+	&__right {
+		width: 50%;
+		max-height: 700px;
+		overflow: hidden;
+		img {
+			margin-top: -19%;
+		}
+	}
+
+}
+.banner-color {
+	display: flex;
+	align-content: stretch;
+	overflow: hidden;
+	&__left {
+		background: #000;
+		width: 65%;
+	}
+	&__right {
+		width: 35%;
+	}
+	&__right-gray {
+		background: #141414;
+		height: 350px;
+	}
+	&__right-red {
+		background: #bb1c18;
+		height: 350px;
+	}
+}
+
+.banner-bottom {
+	&__img {
+		width: 100%;
+		display: block;
+	}
+}
+.footer {
+	&__top-text {
+		text-transform: uppercase;
+		text-align: center;
+        padding: 15px 0;
+        font-size: 18px;
+	}
+	&__top-link {
+		color: #000;
+		font-weight: bold;
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+.privilege {
+	display: flex;
+	align-content: stretch;
+	justify-content: space-between;
+    padding: 15px 0 70px;
+    border-top: 1px solid @border;
+	&__delivery,
+	&__samples,
+	&__payment,
+	&__contacts {
+		padding: 15px 35px;
+		text-align: center;
+        border-right: 1px solid @border;
+        &:first-child {
+          padding-left: 65px;
+        }
+        &:last-child {
+          padding-right: 65px;
+        }
+	}
+    &__delivery-img {
+      width: 35px;
+      height: 33px;
+    }
+    &__samples-img {
+      width: 49px;
+      height: 33px;
+    }
+    &__payment-img {
+      width: 22px;
+      height: 33px;
+    }
+    &__contacts-img {
+      width: 22px;
+      height: 33px;
+    }
+    &__title {
+      text-transform: uppercase;
+    }
+    &__text {
+      color: @textFooter;
+    }
+}
+
+@media @mobile {
+	.banner-center {
+		flex-wrap: wrap;
+		&__left-top,
+		&__left-bottom {
+			height: 100%;
+		}
+		&__left,
+		&__right {
+			width: 100%;
+			max-height: none;
+			img {
+				margin: 0;
+			}
+		}
+	}
+	.privilege {
+        flex-wrap: wrap;
+        padding: 0;
+		&__delivery,
+		&__samples,
+		&__payment,
+		&__contacts {
+			width: calc(50% - .5px);
+            padding: 35px 0;
+            border-bottom: 1px solid @border;
+            &:first-child {
+              padding: 35px 0;
+            }
+            &:last-child {
+              padding: 35px 0;
+            }
+		}
+        &__text-mobile  {
+            font-size: 14px;
+            font-weight: bold;
+            color: @textFooter;
+        }
+	}
+    .logo {
+      width: 150px;
+      height: 33.5px;
+      margin: 20px auto;
+      background: url(../img/svg/logo.svg) no-repeat;
+      background-size: 150px 33.5px;
+    }
+}

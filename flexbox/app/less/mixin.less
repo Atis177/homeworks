@@ -1,0 +1,34 @@
+@bgNav: #000;
+@bgTop: #e3e3e3;
+@text: #000;
+@linkHeader: #6c6c6c;
+@linkNav: #9d9d9d;
+@textFooter: #686868;
+@border: #e4e4e4;
+
+@desktop: ~"only screen and (min-width: 1025px)";
+@mobile: ~"(max-width: 1024px)";
+
+@media @desktop {
+  .only-mobile {
+    display: none !important;
+  }
+}
+
+@media @mobile {
+  .only-desktop {
+    display: none !important;;
+  }
+}
+
+@media @desktop {
+  .hide-on-desktop {
+    display: none !important;;
+  }
+}
+
+@media @mobile {
+  .hide-on-mobile {
+    display: none !important;;
+  }
+}
