@@ -14,9 +14,10 @@
     <script src="js//picturefill.js"></script>
 </head>
 <body>
-<div class="wrapper">
 
-</div>
+<!--<svg>-->
+	<!--<use xlink:href="../img/svg.svg#pack_icon" />-->
+<!--</svg>-->
 	<div class="top hide-on-mobile">
 		<p class="top__text"><a href="#" class="top__text-link">sign up</a> here to receive the latest exclusive information on giorgio armani beauty</p>
 	</div>
@@ -28,12 +29,18 @@
 				<li class="link-help__list-item">Shipping to USA - $</li>
 			</ul>
 		</div>
+		<div class="mobile-menu only-mobile">
+			<img src="../img/icon-menu.png" alt="">
+		</div>
 		<div class="logo"></div>
 		<div class="link-account hide-on-mobile">
 			<ul class="link-account__list">
 				<li class="link-account__list-item">Sign up</li>
 				<li class="link-account__list-item">My account</li>
-				<li class="link-account__list-item">My bac</li>
+				<li class="link-account__list-item">
+					<img src="../img/icon-baс.png" alt="" class="link-account__list-icon">
+					<span>My bac</span>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -43,10 +50,13 @@
 			<li class="nav__list-item">Skincare</li>
 			<li class="nav__list-item">Fragrances</li>
 			<li class="nav__list-item">Armani prive</li>
-			<li class="nav__list-item">online exclusives</li>
+			<li class="nav__list-item nav__list-border">online exclusives</li>
 			<li class="nav__list-item">Gifts</li>
 			<li class="nav__list-item">Maestro of datails</li>
-			<li class="nav__list-item">Search</li>
+			<li class="nav__list-item nav__list-search">
+				<span class="nav__list-search-text">Search</span>
+				<img src="../img/icon-search.png" alt="">
+			</li>
 		</ul>
 	</div>
 	<div class="main">
@@ -136,9 +146,12 @@
     </div>
 </div>
 
-	
-	<script src="js/libs.min.js"></script>
-	<script src="js/lib/flexibility1.0.6.js"></script>
+
+	<script src="js/flexibility1.0.6_svg_fix.js"></script>
+	<script src="js/svg4everybody.min.js"></script>
+	<script>
+		svg4everybody();
+	</script>
 
 </body>
 </html>
