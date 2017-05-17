@@ -11,15 +11,16 @@
 <body>
 
 <div id="citySelector">
-    <button class="js-load-region hidden">Выберите регион</button>
+    <button class="js-btn-load hidden">Выберите регион</button>
     <div id="region"></div>
     <div id="city"></div>
+    <button class="js-btn-save">Сохранить</button>
 </div>
 
 <script type="text/template" id="region-select">
-    <ul  class="js-region-select">
+    <ul  class="">
         <% regions.forEach(item => { %>
-            <li class="js-region-select-item" data-region-id="<%= item.id%>"><%= item.title %></li>
+            <li class="js-region-select" data-region-id="<%= item.id%>"><%= item.title %></li>
         <% }); %>
     </ul>
 </script>
@@ -27,7 +28,7 @@
 <script type="text/template" id="city-select">
     <ul class="js-city-select">
         <% for(var key in city) { %>
-            <li class="js-city-select-item"><%= city[key] %></li>
+            <li class="js-city-select"><%= city[key] %></li>
         <% } %>
     </ul>
 </script>
