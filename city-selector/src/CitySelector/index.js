@@ -39,7 +39,6 @@ class CitySelector {
         this.el.on('click', (event) => {
             let $elem       = $(event.target);
             let regionId    = $elem.data('region-id');
-            this.resultCity = null;
 
             if($elem.hasClass('js-region-select')) {
                 $.ajax({
@@ -52,11 +51,11 @@ class CitySelector {
 
                     this.city.html(regionsTmpl({city: sortedCity[0].list}));
                     this._selectCity();
+                    this.resultRegion = $(event.target).html();
+                    this.resultCity = null;
+                    this.resultId = regionId;
+                    this.btnSave.addClass('hidden');
                 });
-
-                this.resultRegion = $(event.target).html();
-                this.resultId = regionId;
-                this.btnSave.addClass('hidden');
             }
         });
     }
@@ -78,18 +77,18 @@ class CitySelector {
         this.el.on('click', (event) => {
             let $elem = $(event.target);
 
-            if($elem.hasClass('js-btn-save')) {
-                $.ajax({
-                    url: this.saveUrl,
-                    type: 'POST',
-                    data: {
-                        "region": this.resultRegion,
-                        "city": this.resultCity,
-                        "id": this.resultId
-                    }
-                }).done(
-                    window.location.href = this.saveUrl
-                );
+        if($elem.hasClass('js-btn-save')) {
+            $.ajax({
+                url: this.saveUrl,
+                type: 'POST',
+                data: {
+                    region: this.resultRegion,
+                    city: this.resultCity,
+                    id: this.resultId
+                }
+            }).done(
+                window.location.href = this.saveUrl
+            );
             }
         });
     }
