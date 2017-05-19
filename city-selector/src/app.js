@@ -1,3 +1,4 @@
+import './CitySelector/style.less';
 const CitySelector = require('./CitySelector');
 
 new CitySelector({

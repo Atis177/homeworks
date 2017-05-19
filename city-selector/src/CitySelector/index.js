@@ -7,6 +7,7 @@ class CitySelector {
         this.localitiesUrl   = options.localitiesUrl;
         this.saveUrl         = options.saveUrl;
         this.btnSave         = $('.js-btn-save');
+        this.btnLoad         = $('.js-btn-load');
         this.region          = $('#region');
         this.city            = $('#city');
         this._regionTemplate = $('#region-select').html();
@@ -31,16 +32,20 @@ class CitySelector {
                     this.region.html(regionsTmpl({regions: res}));
                     this._selectRegion();
                 });
+
+                $elem.addClass('_hidden');
             }
         });
     }
 
     _selectRegion(){
         this.el.on('click', (event) => {
-            let $elem       = $(event.target);
-            let regionId    = $elem.data('region-id');
+            let $elem    = $(event.target);
+            let regionId = $elem.data('region-id');
 
             if($elem.hasClass('js-region-select')) {
+                $('.js-region-select').removeClass('_selected');
+
                 $.ajax({
                     url: this.localitiesUrl
                 }).done((res) => {
@@ -54,7 +59,8 @@ class CitySelector {
                     this.resultRegion = $(event.target).html();
                     this.resultCity = null;
                     this.resultId = regionId;
-                    this.btnSave.addClass('hidden');
+                    $elem.addClass('_selected');
+                    this.btnSave.addClass('_hidden');
                 });
             }
         });
@@ -67,7 +73,8 @@ class CitySelector {
             if($elem.hasClass('js-city-select')) {
                 this.resultCity = $(event.target).html();
 
-                if (this.resultCity !== null) this.btnSave.removeClass('hidden');
+                if (this.resultCity !== null) this.btnSave.removeClass('_hidden');
+                $elem.addClass('_selected');
                 this._sendForm();
             }
         });
@@ -93,5 +100,6 @@ class CitySelector {
         });
     }
 };
+
 module.exports = CitySelector;
 
