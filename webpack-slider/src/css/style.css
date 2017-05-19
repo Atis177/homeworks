@@ -1,0 +1,14 @@
+body {
+    padding: 0;
+    margin: 20px;
+}
+#slider {
+    max-width: 1280px;
+    height: 800px;
+    margin: 0 auto 50px;
+    border-radius: 10px;
+    background: url(../images/preview.jpg) no-repeat;
+}
+.slick-prev:before, .slick-next:before {
+    color: #000;
+}

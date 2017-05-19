@@ -1,0 +1,21 @@
+{
+  "name": "WebpackSlider",
+  "version": "0.0.1",
+  "description": "Homework: Slider as Webpack Module",
+  "author": "Andrey Miskov",
+  "scripts": {
+    "start": "webpack-dev-server --hot --inline --devtool eval --progress --colors"
+  },
+  "dependencies": {
+    "jquery": "^2.1.4",
+    "slick-carousel": "^1.5.8"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.4",
+    "css-loader": "^0.21.0",
+    "file-loader": "^0.8.4",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.2",
+    "webpack-dev-server": "^1.12.1"
+  }
+}
