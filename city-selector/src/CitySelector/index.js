@@ -2,11 +2,11 @@ const $ = require('jquery');
 
 class CitySelector {
     constructor(options){
-        this.el = $('#' + options.el);
+        this.el = $(`#${options.el}`);
         this.regionsUrl      = options.regionsUrl;
         this.localitiesUrl   = options.localitiesUrl;
         this.saveUrl         = options.saveUrl;
-        this.loadRegion      = $('.js-load-region');
+        this.btnSave         = $('.js-btn-save');
         this.region          = $('#region');
         this.city            = $('#city');
         this._regionTemplate = $('#region-select').html();
@@ -15,14 +15,7 @@ class CitySelector {
         this.resultRegion    = null;
         this.resultCity      = null;
 
-        this.initCitySelector();
-    }
-
-    initCitySelector() {
-        this.loadRegion.removeClass('hidden');
         this._loadRegion();
-        this._selectCity();
-        this._sendForm();
     }
 
     _loadRegion() {
@@ -32,7 +25,7 @@ class CitySelector {
             if($elem.hasClass('js-btn-load')) {
                 $.ajax({
                     url: this.regionsUrl
-                }).done((res) => {;
+                }).done((res) => {
                     var regionsTmpl = _.template(this._regionTemplate);
 
                     this.region.html(regionsTmpl({regions: res}));
@@ -44,8 +37,9 @@ class CitySelector {
 
     _selectRegion(){
         this.el.on('click', (event) => {
-            let $elem = $(event.target);
-            let regionId = $elem.data('region-id');
+            let $elem       = $(event.target);
+            let regionId    = $elem.data('region-id');
+            this.resultCity = null;
 
             if($elem.hasClass('js-region-select')) {
                 $.ajax({
@@ -57,10 +51,12 @@ class CitySelector {
                     });
 
                     this.city.html(regionsTmpl({city: sortedCity[0].list}));
+                    this._selectCity();
                 });
 
                 this.resultRegion = $(event.target).html();
                 this.resultId = regionId;
+                this.btnSave.addClass('hidden');
             }
         });
     }
@@ -71,13 +67,16 @@ class CitySelector {
 
             if($elem.hasClass('js-city-select')) {
                 this.resultCity = $(event.target).html();
+
+                if (this.resultCity !== null) this.btnSave.removeClass('hidden');
+                this._sendForm();
             }
         });
     }
 
     _sendForm(){
         this.el.on('click', (event) => {
-            let $elem       = $(event.target);
+            let $elem = $(event.target);
 
             if($elem.hasClass('js-btn-save')) {
                 $.ajax({
