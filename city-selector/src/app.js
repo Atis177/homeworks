@@ -1,4 +1,4 @@
-const CitySelector = require('./CitySelector');
+import CitySelector from './CitySelector';
 
 new CitySelector({
     elementId: 'citySelector',

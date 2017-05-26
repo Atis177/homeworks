@@ -1,1 +1,46 @@
-// Your code...
+._hidden {
+    display: none;
+}
+
+._selected {
+    background: #eee;
+}
+
+.city-selector {
+    display: flex;
+
+    &__btn {
+        background: #ddd;
+        border: 0;
+        outline: none;
+        padding: .3rem 1rem;
+        text-transform: uppercase;
+        height: 2.1rem;
+        cursor: pointer;
+        margin-right: 2rem;
+
+        &:hover {
+            background: #eee;
+        }
+    }
+
+    &__item {
+        flex-basis: 15rem;
+    }
+
+    &__list {
+        padding: 0;
+        margin-top: 0rem;
+    }
+
+    &__list-item {
+        list-style-type: none;
+        padding: .5rem;
+        margin-right: 2rem;
+
+        &:hover {
+            cursor: pointer;
+            background: #eee;
+        }
+    }
+}
