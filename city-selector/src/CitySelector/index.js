@@ -8,7 +8,7 @@ const $ = require('jquery');
 const $body = $('body');
 
 class CitySelector {
-    constructor(options){
+    constructor(options) {
         const {elementId, regionsUrl, localitiesUrl, saveUrl}  = options;
         const $container = $(`#${elementId}`);
         $container.addClass('city-selector');
@@ -21,11 +21,11 @@ class CitySelector {
         this._selectCity($container, saveUrl);
     }
 
-    _renderTemplate(elementId){
+    _renderTemplate(elementId) {
         $(template({})).appendTo(`#${elementId}`);
     }
 
-    _renderRegion(regionsUrl, $container){
+    _renderRegion(regionsUrl, $container) {
         $container.on('click', '.js-btn-load', () => {
             this._sendRequest(regionsUrl, (regions) => {
                 let $regionWr = $('#region');
@@ -35,10 +35,11 @@ class CitySelector {
         });
     }
 
-    _renderCity(localitiesUrl, $container){
+    _renderCity(localitiesUrl, $container, saveUrl) {
         $container.on('click', '.js-region-select', (ev) => {
             let $regionId = $(ev.target).data('region-id');
             this.region = $(ev.target).text();
+            this.city   = '';
 
             $('.js-region-select').removeClass('_selected');
             $(ev.target).addClass('_selected');
@@ -48,21 +49,31 @@ class CitySelector {
 
                 $cityWr.html(cityTmpl({cities}));
             });
+
+            if(this.city !== '') {
+                $('.js-btn-submit').attr('disabled', false);
+            }
+
+            this._formRender(saveUrl);
         });
     }
 
-    _selectCity($container, saveUrl){
+    _selectCity($container, saveUrl) {
         $container.on('click', '.js-city-select', (ev) => {
             this.city = $(ev.target).text();
 
             $('.js-city-select').removeClass('_selected');
             $(ev.target).addClass('_selected');
 
-            this._formSubmit(saveUrl);
+            this._formRender(saveUrl);
+
+            if(this.city !== ''){
+                $('.js-btn-submit').attr('disabled', false);
+            }
         });
     }
 
-    _formSubmit(saveUrl) {
+    _formRender(saveUrl) {
         let $addressInfo = $('#address-info');
 
         $addressInfo.html(formTmpl({
