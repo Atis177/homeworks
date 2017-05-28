@@ -19,6 +19,7 @@ class CitySelector {
         this._renderCity(localitiesUrl, $container);
         this._renderTemplate(elementId, $container);
         this._selectCity($container, saveUrl);
+        this._formRender(saveUrl);
     }
 
     _renderTemplate(elementId) {
