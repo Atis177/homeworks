@@ -11,15 +11,17 @@ class CitySelector {
     constructor(options) {
         const {elementId, regionsUrl, localitiesUrl, saveUrl}  = options;
         const $container = $(`#${elementId}`);
-        $container.addClass('city-selector');
-        this.region;
-        this.city;
 
-        this._renderRegion(regionsUrl, $container);
-        this._renderCity(localitiesUrl, $container);
         this._renderTemplate(elementId, $container);
         this._selectCity($container, saveUrl);
-        this._formRender(saveUrl);
+        this._renderRegion(regionsUrl, $container);
+        this._renderCity(localitiesUrl, $container);
+
+        $container.addClass('city-selector');
+
+        $body.on('changeForm', () => {
+            this._formRender(saveUrl);
+        });
     }
 
     _renderTemplate(elementId) {
@@ -36,7 +38,7 @@ class CitySelector {
         });
     }
 
-    _renderCity(localitiesUrl, $container, saveUrl) {
+    _renderCity(localitiesUrl, $container) {
         $container.on('click', '.js-region-select', (ev) => {
             let $regionId = $(ev.target).data('region-id');
             this.region = $(ev.target).text();
@@ -55,18 +57,18 @@ class CitySelector {
                 $('.js-btn-submit').attr('disabled', false);
             }
 
-            this._formRender(saveUrl);
+            $container.trigger('changeForm');
         });
     }
 
-    _selectCity($container, saveUrl) {
+    _selectCity($container) {
         $container.on('click', '.js-city-select', (ev) => {
             this.city = $(ev.target).text();
 
             $('.js-city-select').removeClass('_selected');
             $(ev.target).addClass('_selected');
 
-            this._formRender(saveUrl);
+            $container.trigger('changeForm');
 
             if(this.city !== ''){
                 $('.js-btn-submit').attr('disabled', false);
