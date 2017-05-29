@@ -8,5 +8,8 @@ new CitySelector({
     saveUrl: 'http://localhost:3000/selectedRegions'
 });
 
+$('.js-destroy-component').on('click', () => {
+    CitySelector.destroy();
+});
 
 

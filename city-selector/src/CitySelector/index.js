@@ -13,9 +13,10 @@ class CitySelector {
         const $container = $(`#${elementId}`);
 
         this._renderTemplate(elementId, $container);
-        this._selectCity($container, saveUrl);
+        this._selectCity($container);
         this._renderRegion(regionsUrl, $container);
         this._renderCity(localitiesUrl, $container);
+        this._formRender();
 
         $container.addClass('city-selector');
 
@@ -86,7 +87,7 @@ class CitySelector {
         }));
     }
 
-    _sendRequest(url, onSuccess){
+    _sendRequest(url, onSuccess) {
         $.ajax({
             url: url
         }).done(onSuccess)
