@@ -1,8 +1,8 @@
 import './style.less';
-import template from './template.hbs'
-import regionTmpl from './region.hbs'
-import cityTmpl from './city.hbs'
-import formTmpl from './form.hbs'
+import template from './templates/mainTemplate.hbs'
+import regionTmpl from './templates/region.hbs'
+import cityTmpl from './templates/city.hbs'
+import formTmpl from './templates/form.hbs'
 
 const $ = require('jquery');
 const $body = $('body');
@@ -10,71 +10,63 @@ const $body = $('body');
 class CitySelector {
     constructor(options) {
         const {elementId, regionsUrl, localitiesUrl, saveUrl}  = options;
-        const $container = $(`#${elementId}`);
+        this.$container = $(`#${elementId}`);
 
-        this._renderTemplate(elementId, $container);
-        this._selectCity($container);
-        this._renderRegion(regionsUrl, $container);
-        this._renderCity(localitiesUrl, $container);
-        this._formRender();
+        $(template({})).appendTo(`#${elementId}`);
+        this.$container.addClass('city-selector');
 
-        $container.addClass('city-selector');
+        this.$container
+            .on('click', '.js-btn-load', {regionsUrl: regionsUrl}, this._renderRegion.bind(this))
+            .on('click', '.js-region-select', {localitiesUrl: localitiesUrl}, this._renderCity.bind(this))
+            .on('click', '.js-city-select', this._selectCity.bind(this));
 
-        $body.on('changeForm', () => {
+        $body.on('citySelector:change', () => {
             this._formRender(saveUrl);
         });
     }
 
-    _renderTemplate(elementId) {
-        $(template({})).appendTo(`#${elementId}`);
-    }
+    _renderRegion(event) {
+        this._sendRequest(event.data.regionsUrl).then((regions) => {
+            let $regionWr = $('#region');
 
-    _renderRegion(regionsUrl, $container) {
-        $container.on('click', '.js-btn-load', () => {
-            this._sendRequest(regionsUrl, (regions) => {
-                let $regionWr = $('#region');
-
-                $regionWr.html(regionTmpl({regions}))
-            });
+            $regionWr.html(regionTmpl({regions}))
         });
     }
 
-    _renderCity(localitiesUrl, $container) {
-        $container.on('click', '.js-region-select', (ev) => {
-            let $regionId = $(ev.target).data('region-id');
-            this.region = $(ev.target).text();
-            this.city   = '';
+    _renderCity(event) {
+        let $regionId = $(event.target).data('region-id');
+        this.region = $(event.target).text();
+        this.city   = '';
 
-            $('.js-region-select').removeClass('_selected');
-            $(ev.target).addClass('_selected');
+        $('.js-region-select').removeClass('_selected');
+        $(event.target).addClass('_selected');
 
-            this._sendRequest(`${localitiesUrl}/${$regionId}`, (cities) => {
-                let $cityWr = $('#city');
+        this._sendRequest(`${event.data.localitiesUrl}/${$regionId}`).then((cities) => {
+            let $cityWr = $('#city');
 
-                $cityWr.html(cityTmpl({cities}));
-            });
+            $cityWr.html(cityTmpl({cities}));
+        });
 
-            if(this.city !== '') {
-                $('.js-btn-submit').attr('disabled', false);
-            }
+        $('.js-btn-submit').prop('disabled', this.city === '');
 
-            $container.trigger('changeForm');
+        this.$container.triggerHandler('citySelector:change', {
+            region: this.region,
+            localityName: this.city
         });
     }
 
-    _selectCity($container) {
-        $container.on('click', '.js-city-select', (ev) => {
-            this.city = $(ev.target).text();
+    _selectCity(event) {
+        this.city = $(event.target).text();
 
-            $('.js-city-select').removeClass('_selected');
-            $(ev.target).addClass('_selected');
+        $('.js-city-select').removeClass('_selected');
+        $(event.target).addClass('_selected');
 
-            $container.trigger('changeForm');
-
-            if(this.city !== ''){
-                $('.js-btn-submit').attr('disabled', false);
-            }
+        //triggerHandler не сработал почему-то
+        this.$container.trigger('citySelector:change', {
+            localityName: this.city
         });
+
+        $('.js-btn-submit').prop('disabled', this.city === '');
     }
 
     _formRender(saveUrl) {
@@ -83,15 +75,14 @@ class CitySelector {
         $addressInfo.html(formTmpl({
             url: saveUrl,
             region: this.region,
-            city: this.city
+            city: this.localityName
         }));
     }
 
-    _sendRequest(url, onSuccess) {
-        $.ajax({
+    _sendRequest(url) {
+        return $.ajax({
             url: url
-        }).done(onSuccess)
-          .fail(() => {
+        }).fail(() => {
             console.log('error')
         });
     }
