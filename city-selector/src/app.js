@@ -1,4 +1,5 @@
-const CitySelector = require('./CitySelector');
+import CitySelector from './CitySelector';
+import AddressInfo from './AddressInfo';
 
 new CitySelector({
     elementId: 'citySelector',
@@ -6,4 +7,9 @@ new CitySelector({
     localitiesUrl: 'http://localhost:3000/localities',
     saveUrl: 'http://localhost:3000/selectedRegions'
 });
+
+new AddressInfo({
+    elementId: 'addressInfo',
+});
+
 

@@ -20,7 +20,7 @@ module.exports = {
     ],
     output: {
         path: path.join(__dirname, 'build'),
-        filename: 'bundle.js',
+        filename: 'bundle.js'
     },
     module: {
         loaders: [
@@ -29,8 +29,22 @@ module.exports = {
                 loaders: ['style-loader', 'css-loader']
             },
             {
+                test: /\.hbs$/,
+                loader: "handlebars-loader"
+            },
+            {
                 test: /\.less$/,
                 loaders: ['style-loader', 'css-loader', 'less-loader']
+            },
+            {
+                test: /\.js$/,
+                exclude: /(node_modules)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['env']
+                    }
+                }
             }
         ]
     }
