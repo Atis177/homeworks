@@ -1,5 +1,5 @@
 import CitySelector from './CitySelector';
-const $ = require('jquery');
+import AddressInfo from './AddressInfo';
 
 new CitySelector({
     elementId: 'citySelector',
@@ -8,8 +8,8 @@ new CitySelector({
     saveUrl: 'http://localhost:3000/selectedRegions'
 });
 
-$('.js-destroy-component').on('click', () => {
-    CitySelector.destroy();
+new AddressInfo({
+    elementId: 'addressInfo',
 });
 
 

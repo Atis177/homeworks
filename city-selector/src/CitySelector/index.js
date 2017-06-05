@@ -1,5 +1,5 @@
 import './style.less';
-import template from './templates/mainTemplate.hbs'
+import mainTemplate from './templates/mainTemplate.hbs'
 import regionTmpl from './templates/region.hbs'
 import cityTmpl from './templates/city.hbs'
 import formTmpl from './templates/form.hbs'
@@ -12,7 +12,7 @@ class CitySelector {
         const {elementId, regionsUrl, localitiesUrl, saveUrl}  = options;
         this.$container = $(`#${elementId}`);
 
-        $(template({})).appendTo(`#${elementId}`);
+        $(mainTemplate({})).appendTo(`#${elementId}`);
         this.$container.addClass('city-selector');
 
         this.$container
@@ -34,14 +34,15 @@ class CitySelector {
     }
 
     _renderCity(event) {
-        let $regionId = $(event.target).data('region-id');
+        let regionId = $(event.target).data('region-id');
+        let $regionSelect = $('.js-region-select');
         this.region = $(event.target).text();
         this.city   = '';
 
-        $('.js-region-select').removeClass('_selected');
+        $regionSelect.removeClass('_selected');
         $(event.target).addClass('_selected');
 
-        this._sendRequest(`${event.data.localitiesUrl}/${$regionId}`).then((cities) => {
+        this._sendRequest(`${event.data.localitiesUrl}/${regionId}`).then((cities) => {
             let $cityWr = $('#city');
 
             $cityWr.html(cityTmpl({cities}));
@@ -49,33 +50,35 @@ class CitySelector {
 
         $('.js-btn-submit').prop('disabled', this.city === '');
 
-        this.$container.triggerHandler('citySelector:change', {
+        this.$container.trigger('citySelector:change', {
             region: this.region,
-            localityName: this.city
+            city: this.city
         });
     }
 
     _selectCity(event) {
+        let $citySelect = $('.js-city-select');
         this.city = $(event.target).text();
 
-        $('.js-city-select').removeClass('_selected');
+        $citySelect.removeClass('_selected');
         $(event.target).addClass('_selected');
 
         //triggerHandler не сработал почему-то
         this.$container.trigger('citySelector:change', {
-            localityName: this.city
+            region: this.region,
+            city: this.city
         });
 
         $('.js-btn-submit').prop('disabled', this.city === '');
     }
 
     _formRender(saveUrl) {
-        let $addressInfo = $('#address-info');
+        let $form = $('#form');
 
-        $addressInfo.html(formTmpl({
+        $form.html(formTmpl({
             url: saveUrl,
             region: this.region,
-            city: this.localityName
+            city: this.city
         }));
     }
 
